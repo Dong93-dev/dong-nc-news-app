@@ -1,3 +1,127 @@
 .App {
   text-align: center;
 }
+
+.title {
+  background: #373b44; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to left,
+    #4286f4,
+    #373b44
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to left,
+    #4286f4,
+    #373b44
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+/* title */
+.title__head1 {
+  font-size: 4rem;
+  color: white;
+  padding-left: 5vw;
+}
+
+/* topiclist */
+
+.topiclist {
+  border: 2px solid #373b44;
+  text-align: center;
+  background: white;
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.Collapsible {
+  color: #4286f4;
+}
+
+.topiclist__ul__topiccard_link {
+  text-decoration: none;
+}
+
+.topiclist__ul__topiccard {
+  border: 0.5px solid #373b44;
+  transition: 0.3s all ease-in-out;
+}
+
+.topiclist__ul__topiccard:hover {
+  background: #373b44;
+
+  cursor: pointer;
+}
+
+.topiclist__ul__topiccard:hover .opiclist__ul__topiccard_h1 {
+  color: white;
+  font-weight: 500;
+  padding: 1px;
+}
+
+.opiclist__ul__topiccard_h1 {
+  text-transform: uppercase;
+  color: black;
+  font-weight: 400;
+  font-size: 2rem;
+}
+
+.topiclist__addTopic {
+  border: 0.5px solid #373b44;
+  transition: 0.3s all ease-in-out;
+}
+
+.topiclist__addTopicButton--text {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.topiclist__addTopic:hover {
+  background: #373b44;
+
+  cursor: pointer;
+}
+
+.topiclist__addTopic:hover .topiclist__addTopicButton--text {
+  color: white;
+  font-weight: 500;
+  padding: 1px;
+}
+
+.articleslistblock {
+  margin-top: 5px;
+}
+
+.articlecard {
+  background: white;
+  margin: 5px 0;
+  padding: 5px;
+  display: grid;
+  grid-template: 4rem 2rem 2rem /50% 50%;
+  grid-template-areas: "articletitle articletitle" "author date" "author votes";
+}
+
+.articlecard__h1 {
+  grid-area: articletitle;
+}
+.articlecard__h1__link {
+  font-size: 0.5em;
+}
+.articlecard__author {
+  grid-area: author;
+  font-size: 0.5em;
+}
+
+.articlecard__createdat {
+  grid-area: date;
+  font-size: 0.5em;
+}
+
+.articlecard__votes {
+  grid-area: votes;
+  font-size: 0.5em;
+}
