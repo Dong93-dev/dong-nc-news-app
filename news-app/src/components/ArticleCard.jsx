@@ -12,9 +12,11 @@ function ArticleCard(props) {
           {props.article.title}
         </Link>
       </h1>
-      <p className="articlecard__author">{props.article.author}</p>
-      <p className="articlecard__createdat">{props.article.created_at}</p>
-      <p className="articlecard__votes">{props.article.votes}</p>
+      <p className="articlecard__author">Author: {props.article.author}</p>
+      <p className="articlecard__createdat">
+        Created at: {props.article.created_at}
+      </p>
+      <p className="articlecard__votes">Votes {props.article.votes}</p>
     </div>
   );
 }

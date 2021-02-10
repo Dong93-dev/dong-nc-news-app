@@ -7,27 +7,27 @@ function ConditionQuery(props) {
 
   const handleClick = (event) => {
     if (event.target.textContent === "high-low") {
-      props.changeOrder("asc");
+      props.changeOrder("desc");
       event.target.textContent = "low-high";
     } else {
-      props.changeOrder("desc");
+      props.changeOrder("asc");
       event.target.textContent = "high-low";
     }
   };
 
   return (
     <div className={`${props.blockName}__conditionblock`}>
-      <label>
-        order:
+      <label className={`${props.blockName}__conditionblock__label`}>
+        order{" "}
         <button
           className={`${props.blockName}__conditionblock__order`}
           onClick={handleClick}
         >
-          high-low
+          low-high
         </button>
       </label>
-      <label>
-        sort by
+      <label className={`${props.blockName}__conditionblock__label`}>
+        sort by{" "}
         <select
           name="sort_by"
           className={`${props.blockName}__conditionblock__select`}

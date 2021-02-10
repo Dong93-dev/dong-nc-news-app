@@ -14,20 +14,25 @@ class CommentCard extends Component {
     if (this.state.isLoading) return <Loader />;
     return (
       <div className="commentcard">
-        <h1 className="commentcard__author">{this.state.comment.author}</h1>
+        <p className="commentcard__authortime">
+          {this.state.comment.author} at {this.state.comment.created_at} :
+        </p>{" "}
+        {this.state.comment.author === "jessjelly" ? (
+          <div className="commentcard__delbuttonblock">
+            <button
+              className="commentcard__delbuttonblock__delbutton"
+              onClick={this.handleClick}
+            >
+              delete
+            </button>
+          </div>
+        ) : null}
         <p className="commentcard__body">{this.state.comment.body}</p>
-
-        <p className="commentcard__time">{this.state.comment.created_at}</p>
         <VotePanel
           changeVote={this.changeVote}
           blockName="commentcard"
           votes={this.state.comment.votes}
         />
-        {this.state.comment.author === "dong" ? (
-          <button className="commentcard_delbutton" onClick={this.handleClick}>
-            delete
-          </button>
-        ) : null}
       </div>
     );
   }
@@ -37,19 +42,17 @@ class CommentCard extends Component {
   };
   changeVote = (isUpVote) => {
     const vote = isUpVote ? 1 : -1;
-    this.setState(
-      (currentState) => {
+
+    patchCommentById(this.state.comment.comment_id, vote).then(() => {
+      this.setState((currentState) => {
         return {
           comment: {
             ...currentState.comment,
             votes: currentState.comment.votes + vote,
           },
         };
-      },
-      () => {
-        patchCommentById(this.state.comment.comment_id, vote);
-      }
-    );
+      });
+    });
   };
 }
 

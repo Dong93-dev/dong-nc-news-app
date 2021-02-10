@@ -10,23 +10,25 @@ function VotePanel(props) {
   };
   return (
     <div className={`${props.blockName}__votepanelblock`}>
-      <button
-        value="upvote"
-        onClick={handleClick}
-        className={`${props.blockName}__votepanelblock__upvote`}
-      >
-        ⬆
-      </button>
-      <span className={`${props.blockName}__votepanelblock__votes`}>
-        {props.votes}
-      </span>
-      <button
-        value="downvote"
-        onClick={handleClick}
-        className={`${props.blockName}__votepanelblock__downvote`}
-      >
-        ⬇
-      </button>
+      <div className={`${props.blockName}__votepanelblock--bordermodifier`}>
+        <button
+          value="upvote"
+          onClick={handleClick}
+          className={`${props.blockName}__votepanelblock__upvote`}
+        >
+          ⬆
+        </button>
+        <span className={`${props.blockName}__votepanelblock__votes`}>
+          {props.votes}
+        </span>
+        <button
+          value="downvote"
+          onClick={handleClick}
+          className={`${props.blockName}__votepanelblock__downvote`}
+        >
+          ⬇
+        </button>
+      </div>
     </div>
   );
 }

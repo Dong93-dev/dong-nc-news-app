@@ -7,11 +7,13 @@ class NewCommentForm extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-
-    const comment = { body: this.state.body, user: "dong" };
-    this.setState({ body: "" }, () => {
-      this.props.postNewComment(comment);
-    });
+    if (this.state.body) {
+      const comment = { body: this.state.body, username: "jessjelly" };
+      this.setState({ body: "" }, () => {
+        localStorage.setItem("body", JSON.stringify(""));
+        this.props.postNewComment(comment);
+      });
+    }
   };
 
   componentDidMount() {
@@ -31,7 +33,15 @@ class NewCommentForm extends Component {
               id="newcomment"
             />
           </label>
-          <button className="newcommentblock_submitbutton">Submit</button>
+          {this.state.body ? (
+            <button className="newcommentblock_submitbutton --inservice">
+              Submit
+            </button>
+          ) : (
+            <button className="newcommentblock_submitbutton --ingrey">
+              Submit
+            </button>
+          )}
         </form>
       </div>
     );

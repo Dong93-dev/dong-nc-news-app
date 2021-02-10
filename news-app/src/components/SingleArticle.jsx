@@ -23,19 +23,19 @@ class SingleArticle extends Component {
           {" "}
           {this.state.article.title}
         </h1>
-        <div className="articlePage__singlearticle_infoblock">
-          <p>{this.state.article.author}</p>
-          <p>{this.state.article.created_at}</p>
-          <p>{this.state.article.topic}</p>
-        </div>
-        <div className="articlePage__singlearticle_bodylock">
-          {this.state.article.body}
-        </div>
         <VotePanel
           changeVote={this.changeVote}
           votes={this.state.article.votes}
           blockName="articlePage__singlearticle"
         />
+        <div className="articlePage__singlearticle_infoblock">
+          <p>Author: {this.state.article.author}</p>
+          <p>Created at: {this.state.article.created_at}</p>
+          <p>Topic: {this.state.article.topic}</p>
+        </div>
+        <div className="articlePage__singlearticle_bodylock">
+          {this.state.article.body}
+        </div>
       </div>
     );
   }

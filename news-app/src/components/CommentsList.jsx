@@ -35,10 +35,7 @@ class CommentsList extends Component {
         <h1 className="CommentsListBlock__commentcount">
           total comment: {this.state.comment_count}
         </h1>
-        <ConditionQuery
-          blockName="CommentsListBlock"
-          selectOptions={{ created_at: Date, votes: "Votes" }}
-        />
+
         {this.state.comments.map((comment) => (
           <CommentCard
             key={comment.comment_id}

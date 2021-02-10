@@ -24,8 +24,8 @@ class TopicList extends Component {
     return (
       <nav className="topiclist">
         <Collapsible
-          trigger={"Topic List"}
-          triggerWhenOpen={"close"}
+          trigger={"▲"}
+          triggerWhenOpen={"▼"}
           transitionTime={300}
           overflowWhenOpen="scroll"
         >

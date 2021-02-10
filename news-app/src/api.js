@@ -29,7 +29,7 @@ export const fetchCommentsByArticleId = (articleId, sort_by, order) => {
 };
 
 export const patchCommentById = (commentId, vote) => {
-  return request.get(`/comments/${commentId}`, { inc_votes: vote });
+  return request.patch(`/comments/${commentId}`, { inc_votes: vote });
 };
 
 export const fetchArticleById = (articleId) => {
