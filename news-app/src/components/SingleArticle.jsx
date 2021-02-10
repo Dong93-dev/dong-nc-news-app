@@ -5,7 +5,7 @@ import VotePanel from "./VotePanel";
 import Loader from "./Loader";
 
 class SingleArticle extends Component {
-  state = { isLoading: true, errMsg: "" };
+  state = { isLoading: true, errMsg: "", errMsgVotePanel: "" };
 
   componentDidMount() {
     fetchArticleById(this.props.articleId)
@@ -27,6 +27,9 @@ class SingleArticle extends Component {
           changeVote={this.changeVote}
           votes={this.state.article.votes}
           blockName="articlePage__singlearticle"
+          errMsg={this.state.errMsgVotePanel}
+          username={this.props.username}
+          authorization={this.props.authorization}
         />
         <div className="articlePage__singlearticle_infoblock">
           <p>Author: {this.state.article.author}</p>
@@ -42,18 +45,27 @@ class SingleArticle extends Component {
 
   changeVote = (isUpVote) => {
     const vote = isUpVote ? 1 : -1;
-    this.setState(
-      (currentState) => {
+
+    this.setState((currentState) => {
+      return {
+        article: {
+          ...currentState.article,
+          votes: currentState.article.votes + vote,
+        },
+        errMsgVotePanel: "",
+      };
+    });
+
+    patchArticleVotebyId(this.props.articleId, vote).catch((err) =>
+      this.setState((currentState) => {
         return {
           article: {
             ...currentState.article,
-            votes: currentState.article.votes + vote,
+            votes: currentState.article.votes - vote,
           },
+          errMsgVotePanel: "you are offline",
         };
-      },
-      () => {
-        patchArticleVotebyId(this.props.articleId, vote);
-      }
+      })
     );
   };
 }

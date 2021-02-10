@@ -180,7 +180,7 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard__author {
   grid-area: author;
-  font-size: 0.5em;
+  font-size: 1rem;
   align-self: center;
   text-align: center;
   font-weight: 600;
@@ -188,14 +188,14 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard__createdat {
   grid-area: date;
-  font-size: 0.5em;
+  font-size: 1rem;
   text-align: end;
   padding-right: 10px;
 }
 
 .articlecard__votes {
   grid-area: votes;
-  font-size: 0.5em;
+  font-size: 1rem;
   text-align: end;
   padding-right: 10px;
 }
@@ -382,6 +382,11 @@ span.Collapsible__trigger.is-open:hover {
   width: 20%;
 }
 
+.commentcard__err {
+  color: red;
+  font-size: 0.5em;
+}
+
 /* modifier */
 .--ingrey {
   background: grey;
@@ -396,4 +401,16 @@ span.Collapsible__trigger.is-open:hover {
 
 .--inservice:hover {
   cursor: pointer;
+}
+
+/* register page */
+
+.registerpage,
+.loginblock {
+  margin-top: 20vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

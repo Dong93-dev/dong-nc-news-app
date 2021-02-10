@@ -49,3 +49,20 @@ export const postComment = (articleId, { username, body }) => {
 export const deleteComment = (commentId) => {
   return request.delete(`/comments/${commentId}`);
 };
+
+export const postUser = (
+  username,
+  password,
+  name,
+  avatar_url = "placeholder"
+) => {
+  return request
+    .post(`/users`, { username, password, name, avatar_url })
+    .then(({ data }) => data);
+};
+
+export const login = (username, password) => {
+  return request
+    .post(`/login`, { username, password })
+    .then(({ data }) => data);
+};

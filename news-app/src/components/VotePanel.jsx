@@ -1,11 +1,15 @@
 import React from "react";
+import { navigate } from "@reach/router";
 
 function VotePanel(props) {
   const handleClick = (event) => {
-    if (event.target.value === "upvote") {
-      props.changeVote(true);
-    } else {
-      props.changeVote(false);
+    if (!props.authorization) navigate("/login");
+    else {
+      if (event.target.value === "upvote") {
+        props.changeVote(true);
+      } else {
+        props.changeVote(false);
+      }
     }
   };
   return (
@@ -29,6 +33,9 @@ function VotePanel(props) {
           ⬇
         </button>
       </div>
+      {props.errMsg ? (
+        <p className={`${props.blockName}__err`}>{props.errMsg}</p>
+      ) : null}
     </div>
   );
 }

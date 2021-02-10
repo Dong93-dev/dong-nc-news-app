@@ -5,6 +5,7 @@ import ConditionQuery from "./ConditionQuery";
 import ErrorDisplayer from "./ErrorDisplayer";
 import Loader from "./Loader";
 import NewCommentForm from "./NewCommentForm";
+import { Link } from "@reach/router";
 
 class CommentsList extends Component {
   state = {
@@ -31,18 +32,34 @@ class CommentsList extends Component {
 
     return (
       <div className="CommentsListBlock">
-        <NewCommentForm postNewComment={this.postNewComment} />
+        <NewCommentForm
+          postNewComment={this.postNewComment}
+          username={this.props.username}
+          authorization={this.props.authorization}
+        />
         <h1 className="CommentsListBlock__commentcount">
           total comment: {this.state.comment_count}
         </h1>
-
-        {this.state.comments.map((comment) => (
-          <CommentCard
-            key={comment.comment_id}
-            comment={comment}
-            removeComment={this.removeComment}
-          />
-        ))}
+        <div
+          className={
+            this.props.authorization
+              ? "CommentsListBlock__cardlist"
+              : "CommentsListBlock__cardlist listdisabled"
+          }
+        >
+          {this.state.comments.map((comment) => (
+            <CommentCard
+              key={comment.comment_id}
+              comment={comment}
+              removeComment={this.removeComment}
+              username={this.props.username}
+              authorization={this.props.authorization}
+            />
+          ))}
+        </div>
+        <div className="articlePage__othercomments">
+          <Link to="/login">want to see more?</Link>
+        </div>
       </div>
     );
   }

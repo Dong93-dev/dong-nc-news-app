@@ -8,7 +8,7 @@ class NewCommentForm extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.body) {
-      const comment = { body: this.state.body, username: "jessjelly" };
+      const comment = { body: this.state.body, username: this.props.username };
       this.setState({ body: "" }, () => {
         localStorage.setItem("body", JSON.stringify(""));
         this.props.postNewComment(comment);
@@ -24,21 +24,38 @@ class NewCommentForm extends Component {
     return (
       <div className="newcommentblock">
         <form onSubmit={this.handleSubmit} className="newcommentblock_form">
-          <label>
-            leave your comment:
-            <textarea
-              value={this.state.body}
-              type="text"
-              onChange={this.handleChange}
-              id="newcomment"
-            />
-          </label>
+          {this.props.authorization ? (
+            <label>
+              leave your comment:
+              <textarea
+                value={this.state.body}
+                type="text"
+                onChange={this.handleChange}
+                id="newcomment"
+              />
+            </label>
+          ) : (
+            <label>
+              Please login before commenting
+              <textarea
+                value={this.state.body}
+                type="text"
+                onChange={this.handleChange}
+                id="newcomment"
+                disabled
+              />
+            </label>
+          )}
+
           {this.state.body ? (
             <button className="newcommentblock_submitbutton --inservice">
               Submit
             </button>
           ) : (
-            <button className="newcommentblock_submitbutton --ingrey">
+            <button
+              disabled={true}
+              className="newcommentblock_submitbutton --ingrey"
+            >
               Submit
             </button>
           )}
@@ -48,7 +65,8 @@ class NewCommentForm extends Component {
   }
   handleChange = (event) => {
     this.setState({ body: event.target.value }, () => {
-      localStorage.setItem("body", JSON.stringify(event.target.value));
+      if (this.props.username)
+        localStorage.setItem("body", JSON.stringify(event.target.value));
     });
   };
 }
