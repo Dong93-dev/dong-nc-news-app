@@ -18,7 +18,7 @@ class NewCommentForm extends Component {
 
   componentDidMount() {
     const body = JSON.parse(localStorage.getItem("body"));
-    this.setState({ body });
+    if (body) this.setState({ body });
   }
   render() {
     return (
@@ -36,7 +36,7 @@ class NewCommentForm extends Component {
             </label>
           ) : (
             <label>
-              Please login before commenting
+              Please login
               <textarea
                 value={this.state.body}
                 type="text"

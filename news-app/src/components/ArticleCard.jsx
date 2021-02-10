@@ -14,7 +14,7 @@ function ArticleCard(props) {
       </h1>
       <p className="articlecard__author">Author: {props.article.author}</p>
       <p className="articlecard__createdat">
-        Created at: {props.article.created_at}
+        Created at: {props.article.created_at.split("T")[0]}
       </p>
       <p className="articlecard__votes">Votes {props.article.votes}</p>
     </div>

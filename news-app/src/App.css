@@ -14,14 +14,57 @@
     #4286f4,
     #373b44
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* title */
 .title__head1 {
-  font-size: 5rem;
+  font-size: 6rem;
   color: white;
-  padding-left: 5vw;
+  padding: 40px 10px 40px 20px;
   font-family: Montserrat;
+  text-decoration: none;
+}
+.title__head1__link {
+  text-decoration: none;
+}
+
+/* registerpanel */
+.RegisterAndLoginPanel {
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+}
+
+.RegisterAndLoginPanel__loginlink,
+.RegisterAndLoginPanel__registerlink {
+  color: rgb(24, 18, 17);
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+/* welcome panel */
+
+.welcomeandsignout {
+  display: flex;
+  width: 40%;
+  flex-direction: column;
+  padding-right: 30px;
+  align-items: flex-end;
+}
+
+.welcomeandsignout__greeting {
+  font-size: 2rem;
+  color: black;
+  font-weight: 600;
+}
+.welcomeandsignout__signout {
+  color: rgb(24, 18, 17);
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-decoration: underline;
 }
 
 /* topiclist */
@@ -67,7 +110,8 @@ span.Collapsible__trigger.is-closed,
 span.Collapsible__trigger.is-open {
   display: inline-block;
   width: 100%;
-  font-size: 2rem;
+
+  font-size: 3rem;
   font-weight: 1200;
   color: black;
   transition: 0.3s all ease-in-out;
@@ -90,7 +134,7 @@ span.Collapsible__trigger.is-open:hover {
   text-transform: uppercase;
   color: black;
   font-weight: 400;
-  font-size: 2rem;
+  font-size: 4rem;
   width: 100%;
 }
 
@@ -124,6 +168,7 @@ span.Collapsible__trigger.is-open:hover {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin: 30px 0;
 }
 .articleslistblock__conditionblock__label {
   font-size: 3rem;
@@ -150,22 +195,22 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard {
   background: white;
-  margin: 5px 0;
-  padding: 5px;
+  margin: 10px 0;
+  padding: 30px 0;
   display: grid;
-  grid-template: auto 2rem 2rem /50% 50%;
+  grid-template: auto auto 2rem /50% 50%;
   grid-template-areas: "articletitle articletitle" "author date" "author votes";
 }
 
 .articlecard__h1 {
   grid-area: articletitle;
   margin: 0 20px;
+
   text-align: left;
-  padding: 20px 0;
+  padding: 0 0 20px 0;
 }
 
 .articlecard__h1__link {
-  text-decoration: none;
   font-size: 1em;
   line-height: 1.5em;
   color: black;
@@ -180,7 +225,7 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard__author {
   grid-area: author;
-  font-size: 1rem;
+  font-size: 0.8rem;
   align-self: center;
   text-align: center;
   font-weight: 600;
@@ -188,14 +233,14 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard__createdat {
   grid-area: date;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: end;
   padding-right: 10px;
 }
 
 .articlecard__votes {
   grid-area: votes;
-  font-size: 1rem;
+  font-size: 0.8rem;
   text-align: end;
   padding-right: 10px;
 }
@@ -304,10 +349,48 @@ span.Collapsible__trigger.is-open:hover {
   text-align: end;
 }
 
+.listdisabled {
+  overflow: hidden;
+  height: 200px;
+}
+
+.articlePage__othercomments {
+  border: 2px solid grey;
+  text-align: center;
+  border: none;
+  width: 100%;
+
+  height: 150px;
+  font-size: 2rem;
+  border-radius: 2rem;
+  background-color: white;
+  padding: 10px 0;
+}
+
+.articlePage__othercomments__button {
+  top: 0;
+  width: 100%;
+  font-size: 3rem;
+  color: rgb(66 103 178);
+  background: white;
+  height: 70px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 10px rgba(128 128 128 0.5) solid;
+  border-radius: 2rem;
+  transition: 0.3s all ease-in-out;
+}
+
+.articlePage__othercomments__button:hover {
+  background: rgb(66 103 178);
+  cursor: pointer;
+  color: white;
+}
+
 /* comment block comment card */
 .commentcard {
   border-top: rgba(245, 245, 245, 0.5) 2px solid;
-  padding: 5px;
+  padding: 20px 0;
   display: grid;
   grid-template: auto auto auto/ 80% 20%;
   grid-template-areas: "authortime del" "commentcontent commentcontent" "votepanel votepanel";
@@ -316,10 +399,11 @@ span.Collapsible__trigger.is-open:hover {
 .commentcard__authortime {
   grid-area: authortime;
 
-  font-size: 0.8rem !important;
+  font-size: 2rem;
 }
 .commentcard__delbuttonblock {
   grid-area: del;
+
   text-align: end;
 }
 
@@ -342,7 +426,8 @@ span.Collapsible__trigger.is-open:hover {
 
 .commentcard__body {
   grid-area: commentcontent;
-  font-size: 0.8rem;
+  font-size: 2rem;
+  font-style: italic;
 }
 .commentcard__votepanelblock {
   grid-area: votepanel;

@@ -5,7 +5,7 @@ import ConditionQuery from "./ConditionQuery";
 import ErrorDisplayer from "./ErrorDisplayer";
 import Loader from "./Loader";
 import NewCommentForm from "./NewCommentForm";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 
 class CommentsList extends Component {
   state = {
@@ -57,9 +57,19 @@ class CommentsList extends Component {
             />
           ))}
         </div>
-        <div className="articlePage__othercomments">
-          <Link to="/login">want to see more?</Link>
-        </div>
+
+        {this.props.authorization ? null : (
+          <div className="articlePage__othercomments">
+            <button
+              className="articlePage__othercomments__button"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              want to see more? ▼
+            </button>
+          </div>
+        )}
       </div>
     );
   }

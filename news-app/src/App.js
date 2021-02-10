@@ -18,10 +18,19 @@ class App extends Component {
     keyword: "secret",
   };
 
+  componentDidMount() {
+    const userConfig = JSON.parse(localStorage.getItem("userConfig"));
+    if (userConfig) this.setState({ ...userConfig });
+  }
+
   render() {
     return (
       <>
-        <Title />
+        <Title
+          authorization={this.state.authorization}
+          username={this.state.username}
+          emptyUserConfig={this.emptyUserConfig}
+        />
         <Router>
           <RegisterPage path="/newuser" changeUsername={this.changeUsername} />
           <LogIn path="/login" changeUsername={this.changeUsername} />
@@ -40,14 +49,35 @@ class App extends Component {
     );
   }
 
-  changeUsername = (username, token) => {
-    this.setState((currentState) => {
-      return {
-        username,
-        token,
-        authorization: `${currentState.keyword} ${token}`,
-      };
+  emptyUserConfig = () => {
+    this.setState({
+      username: "",
+      token: "",
+      authorization: "",
+      keyword: "secret",
     });
+  };
+
+  changeUsername = (username, token) => {
+    this.setState(
+      (currentState) => {
+        return {
+          username,
+          token,
+          authorization: `${currentState.keyword} ${token}`,
+        };
+      },
+      () => {
+        localStorage.setItem(
+          "userConfig",
+          JSON.stringify({
+            username,
+            token,
+            authorization: `${this.state.keyword} ${token}`,
+          })
+        );
+      }
+    );
   };
 }
 
