@@ -21,7 +21,25 @@ class TopicList extends Component {
   render() {
     if (this.state.isLoading) return <Loader />;
     if (this.state.topics.length === 0) return <h1>No topics for now</h1>;
-    return (
+    return this.props.path === "/" ? (
+      <div className="topicpage">
+        {" "}
+        <p className="topicpage__prefertopic">PREFER ANY TOPIC?</p>
+        <ul className="topicpage__ul">
+          {this.state.topics.map((topic) => (
+            <TopicCard key={topic.slug} {...topic} path={this.props.path} />
+          ))}
+          <Link to="/topics/newtopic">
+            <div className="topicpage__addTopic">
+              <button className="topicpage__addTopicButton">+</button>
+            </div>
+          </Link>
+        </ul>
+        <Link to="/topics/articles/*">
+          <p className="topicpage__straightin">All articles >></p>
+        </Link>
+      </div>
+    ) : (
       <nav className="topiclist">
         <Collapsible
           trigger={"▲ Topics"}
@@ -29,30 +47,18 @@ class TopicList extends Component {
           transitionTime={300}
           overflowWhenOpen="scroll"
         >
-          {this.props.path === "/" ? (
-            <p className="topiclist__p">Any topic prefer ?</p>
-          ) : null}
           <ul className="topiclist__ul">
             {this.state.topics.map((topic) => (
               <TopicCard key={topic.slug} {...topic} path={this.props.path} />
             ))}
           </ul>
-
-          {this.props.path === "/" ? (
-            <Link to="/topics/newtopic">
-              <div className="topiclist__addTopic">
-                <button className="topiclist__addTopicButton">+</button>
-              </div>
-            </Link>
-          ) : (
-            <Link to="/topics/newtopic">
-              <div className="topiclist__addTopic">
-                <button className="topiclist__addTopicButton--text">
-                  Add a topic
-                </button>
-              </div>
-            </Link>
-          )}
+          <Link to="/topics/newtopic">
+            <div className="topiclist__addTopic">
+              <button className="topiclist__addTopicButton--text">
+                Add a topic
+              </button>
+            </div>
+          </Link>
 
           {this.props.path === "/" ? (
             <p className="topiclist__p">Straight in</p>

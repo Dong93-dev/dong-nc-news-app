@@ -14,7 +14,11 @@ class Articles extends Component {
 
   fetchArticlesByTopic = (topic, sort_by, order) => {
     api
-      .fetchAllArticlesByTopic(topic, sort_by, order)
+      .fetchAllArticlesByTopic(
+        topic === "*" ? undefined : topic,
+        sort_by,
+        order
+      )
       .then(({ articles, total_count }) =>
         this.setState({
           topic: this.props.topic,
@@ -22,6 +26,7 @@ class Articles extends Component {
           total_count,
           sort_by,
           order,
+          isLoading: false,
         })
       )
       .catch((err) => this.setState({ errMsg: err.msg, isLoading: false }));
@@ -48,16 +53,20 @@ class Articles extends Component {
       return <h1>No articles found for this topic</h1>;
     return (
       <div className="articleslistblock">
+        <div className="articleslistblock__topicinfo">
+          <h1 className="articleslistblock__title">
+            {this.props.topic === "*"
+              ? `All Topics`
+              : `Topics: ${this.props.topic}`}
+          </h1>
+          <p className="articleslistblock__count">{`Number of articles: ${this.state.total_count}`}</p>
+        </div>
         <ArticlesConditionQuery
           changeSortBy={this.changeSortBy}
           changeOrder={this.changeOrder}
           blockName="articleslistblock"
-          selectOptions={{
-            created_at: "Date",
-            comment_count: "Comments",
-            votes: "Votes",
-          }}
         />
+
         <ul className="articleslistblock_ul">
           {this.state.articles.map((article) => (
             <ArticleCard key={article.article_id} article={article} />

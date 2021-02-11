@@ -38,7 +38,7 @@ class CommentsList extends Component {
           authorization={this.props.authorization}
         />
         <h1 className="CommentsListBlock__commentcount">
-          total comment: {this.state.comment_count}
+          Total comment: {this.state.comment_count}
         </h1>
         <div
           className={

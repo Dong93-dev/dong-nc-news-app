@@ -17,7 +17,13 @@ class CommentCard extends Component {
       <div className="commentcard">
         {/* <div className="commentcard_avatar"><img src={this.state.} alt="placeholder"/></div> */}
         <p className="commentcard__authortime">
-          {this.state.comment.author} at {this.state.comment.created_at} :
+          {this.state.comment.author} at{" "}
+          {`${this.state.comment.created_at
+            .split("T")[1]
+            .split(":")
+            .slice(0, 2)
+            .join(":")} in ${this.state.comment.created_at.split("T")[0]}`}{" "}
+          :
         </p>{" "}
         {this.state.comment.author === this.props.username ? (
           <div className="commentcard__delbuttonblock">

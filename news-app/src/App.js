@@ -1,4 +1,5 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Title from "./components/Title";
 import { Router, Link } from "@reach/router";
 import TopicList from "./components/TopicList";
@@ -36,7 +37,11 @@ class App extends Component {
           <LogIn path="/login" changeUsername={this.changeUsername} />
           <TopicList path="/" />
           <TopicList path="/topics" />
-          <NewTopicForm path="/topics/newtopic" />
+          <NewTopicForm
+            path="/topics/newtopic"
+            authorization={this.state.authorization}
+            username={this.state.username}
+          />
           <ArticleList path="/topics/articles/*" />
           <ArticlePage
             path="/article/:articleId"

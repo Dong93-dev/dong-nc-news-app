@@ -68,7 +68,6 @@
 }
 
 /* topiclist */
-
 .topiclist {
   border: 2px solid #373b44;
   text-align: center;
@@ -163,30 +162,144 @@ span.Collapsible__trigger.is-open:hover {
   padding: 1px;
 }
 
+/* topicpage */
+.topicpage__prefertopic {
+  width: 100%;
+  margin: 100px auto 50px auto;
+  font-size: 5rem;
+  text-align: center;
+  font-weight: 900;
+  display: block;
+}
+
+.topicpage__ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+
+  overflow: scroll;
+  max-height: 1200px;
+}
+
+.topicpage__ul__topiccard {
+  background: #76b852; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #8dc26f,
+    #76b852
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #8dc26f,
+    #76b852
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  width: 50vw;
+  max-width: 400px;
+  min-width: 200px;
+  border: none;
+  border-radius: 20px;
+  margin: 10px;
+  height: 400px;
+  text-align: center;
+  transition: 0.5s all ease-in-out;
+  display: grid;
+  grid-template: 30% 70% / auto;
+  grid-template-areas: "topic" "description";
+  overflow: scroll;
+}
+
+.topicpage__ul__topiccard:hover {
+  transform: scale(1.1, 1.1);
+}
+
+.topicpage__ul__topiccard_h1 {
+  text-transform: uppercase;
+  font-size: 3rem;
+  grid-area: topic;
+  display: block;
+  margin: auto;
+  font-weight: 600;
+  color: white;
+}
+
+.opiclist__ul__topiccard_p {
+  grid-area: description;
+  font-size: 2rem;
+  display: block;
+  color: white;
+  margin: auto;
+}
+
+.topicpage__addTopicButton {
+  background: #76b852; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #8dc26f,
+    #76b852
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #8dc26f,
+    #76b852
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  height: 400px;
+  width: 40vw;
+  border: none;
+  display: block;
+
+  font-size: 15rem;
+  border-radius: 20px;
+  margin: 10px;
+  color: white;
+}
+
+.topicpage__straightin {
+  font-size: 5rem;
+  text-decoration: underline;
+  color: red;
+  margin: 50px 0;
+  width: 100%;
+  text-align: center;
+}
+
+/* articles info panel: topic, total count*/
+
+.articleslistblock__topicinfo {
+  background: rgb(208, 198, 198);
+  padding: 2sem 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.articleslistblock__title {
+  font-size: 3rem;
+}
+
+.articleslistblock__count {
+  font-size: 2rem;
+  display: block;
+  text-align: center;
+}
+
 /* ConditionQuery */
 .articleslistblock__conditionblock {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   margin: 30px 0;
+  padding-right: 20px;
 }
-.articleslistblock__conditionblock__label {
-  font-size: 3rem;
-}
-.articleslistblock__conditionblock__order {
-  font-size: 3rem;
-  width: 20rem;
+.articleslistblock__orderbutton {
+  margin: 0 5px;
 }
 
-.articleslistblock__conditionblock__select {
-  font-size: 3rem;
-  width: 15rem;
+..articleslistblock__sortbydropdown {
+  margin: 0 5px;
 }
-
-.articleslistblock__conditionblock__select option {
-  font-size: 1rem;
-}
-
 /* article list */
 
 .articleslistblock {
@@ -196,7 +309,9 @@ span.Collapsible__trigger.is-open:hover {
 .articlecard {
   background: white;
   margin: 10px 0;
+  border-top: 5px whitesmoke solid;
   padding: 30px 0;
+
   display: grid;
   grid-template: auto auto 2rem /50% 50%;
   grid-template-areas: "articletitle articletitle" "author date" "author votes";
@@ -211,9 +326,10 @@ span.Collapsible__trigger.is-open:hover {
 }
 
 .articlecard__h1__link {
-  font-size: 1em;
-  line-height: 1.5em;
+  font-size: 2.5rem;
+  line-height: 1.5rem;
   color: black;
+  text-decoration: underline;
   font-family: Poppins;
   font-weight: 600;
 }
@@ -225,7 +341,7 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard__author {
   grid-area: author;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   align-self: center;
   text-align: center;
   font-weight: 600;
@@ -233,14 +349,14 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlecard__createdat {
   grid-area: date;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   text-align: end;
   padding-right: 10px;
 }
 
 .articlecard__votes {
   grid-area: votes;
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   text-align: end;
   padding-right: 10px;
 }
@@ -250,15 +366,16 @@ span.Collapsible__trigger.is-open:hover {
   margin-top: 20px;
   padding: 0 20px 20px 20px;
   background-color: white;
-  border-bottom: whitesmoke 5px solid;
+  border-bottom: whitesmoke 20px solid;
 }
 .articlePage__singlearticle_title {
-  font-size: 2rem;
+  font-size: 4rem;
   margin: 10px 0;
   padding-top: 10px;
 }
 
 .articlePage__singlearticle_infoblock {
+  font-size: 2rem;
   margin: 20px 0;
 }
 .articlePage__singlearticle_infoblock p::before {
@@ -271,6 +388,7 @@ span.Collapsible__trigger.is-open:hover {
 
 .articlePage__singlearticle_bodylock {
   text-align: justify;
+  font-size: 2rem;
 }
 
 /* article votePanel */
@@ -320,10 +438,10 @@ span.Collapsible__trigger.is-open:hover {
 .newcommentblock_form label {
   font-size: 3rem;
   font-weight: bold;
-
+  width: 100%;
   flex-direction: column;
   flex-wrap: wrap;
-  max-width: 768px;
+  max-width: 1000px;
 }
 
 .newcommentblock_form #newcomment {
@@ -342,6 +460,7 @@ span.Collapsible__trigger.is-open:hover {
   border: none;
   color: white;
   font-weight: 600;
+  max-width: 1000px;
 }
 
 .CommentsListBlock__commentcount {
@@ -389,7 +508,7 @@ span.Collapsible__trigger.is-open:hover {
 
 /* comment block comment card */
 .commentcard {
-  border-top: rgba(245, 245, 245, 0.5) 2px solid;
+  border-top: rgb(147, 136, 136, 0.5) 5px solid;
   padding: 20px 0;
   display: grid;
   grid-template: auto auto auto/ 80% 20%;
@@ -488,14 +607,64 @@ span.Collapsible__trigger.is-open:hover {
   cursor: pointer;
 }
 
-/* register page */
+/* login page */
 
-.registerpage,
 .loginblock {
-  margin-top: 20vh;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
+}
+.loginblock__h1 {
+  text-align: center;
+}
+
+.loginblock__form__title {
+  background: #2b488c;
+  background-color: -webkit-linear-gradient(to left, #4286f4, #373b44);
+  background-color: linear-gradient(to left, #4286f4, #373b44);
+  color: white;
+  padding: 0 5px;
+}
+
+.loginblock__form {
+  width: 100%;
+  max-width: 450px;
+  margin: 50px auto;
+}
+
+.loginblock__form__usernamelabel,
+.loginblock__form__passwordlabel {
+  font-size: 2rem;
+}
+
+.loginblock__registerlink {
+  font-size: 1.5rem;
+}
+
+/* register page */
+.registerform {
+  width: 100%;
+  max-width: 450px;
+  margin: 50px auto;
+}
+
+.registerform__usernamelabel,
+.registerform__passwordlabel,
+.registerform__realnamelabel {
+  font-size: 2rem;
+}
+
+/* new topic form */
+
+.newtopicformblock {
+  width: 100%;
+}
+
+.newtopicformblock__title {
+  font-size: 4rem;
+  text-align: center;
+  margin: 40px auto 20px auto;
+}
+.newtopicformblock__newtopicform {
+  max-width: 450px;
+  margin: auto;
 }

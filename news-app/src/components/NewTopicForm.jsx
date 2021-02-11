@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import * as api from "../api";
 import { Link } from "@reach/router";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 class NewTopicForm extends Component {
   state = { slug: "", description: "", warningMsg: "", topics: [] };
@@ -12,7 +14,7 @@ class NewTopicForm extends Component {
 
   render() {
     return (
-      <div className="newtopicform">
+      <div className="newtopicformblock">
         <form onSubmit={this.handleSubmit} className="newtopicform__form">
           <label className="newtopicform__form__slug">
             Please give a slug
@@ -46,6 +48,36 @@ class NewTopicForm extends Component {
             <button>Home Page</button>
           </Link>
         </form>
+        <h1 className="newtopicformblock__title">Let's create a new topic</h1>
+        <Form
+          className="newtopicformblock__newtopicform"
+          onSubmit={this.handleSubmit}
+        >
+          <Form.Group controlId="exampleForm.ControlInput1">
+            <Form.Label>New topic name</Form.Label>
+            <Form.Control type="text" placeholder="New topic name" />
+          </Form.Group>
+
+          <Form.Group controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Description</Form.Label>
+            <Form.Control as="textarea" rows={4} />
+          </Form.Group>
+          <Button
+            disabled={!this.props.authorization}
+            variant="primary"
+            type="submit"
+            className=" btn-lg btn-block"
+          >
+            Create
+          </Button>
+          <Button
+            variant="primary"
+            type="discard"
+            className=" btn-lg btn-block"
+          >
+            Discard
+          </Button>
+        </Form>
       </div>
     );
   }

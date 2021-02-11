@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "@reach/router";
 import { login } from "../api";
+import styled from "styled-components";
+
 class LogIn extends Component {
   state = {
     username: "",
@@ -41,9 +43,19 @@ class LogIn extends Component {
     return (
       <div className="loginblock">
         <Form className="loginblock__form" onSubmit={this.handleSubmit}>
+          <h1>
+            {" "}
+            Welcome to{" "}
+            <span className="font-weight-bold loginblock__form__title">
+              NC NEWS
+            </span>
+          </h1>
           <Form.Group controlId="loginblock__form__username">
-            <Form.Label>username</Form.Label>
+            <Form.Label className="loginblock__form__usernamelabel">
+              Username
+            </Form.Label>
             <Form.Control
+              size="lg"
               className="loginblock__form__usernameInput"
               type="username"
               placeholder="Enter username"
@@ -53,22 +65,32 @@ class LogIn extends Component {
           </Form.Group>
 
           <Form.Group controlId="loginblock__form__password">
-            <Form.Label>Password</Form.Label>
+            <Form.Label className="loginblock__form__passwordlabel">
+              Password
+            </Form.Label>
             <Form.Control
               className="loginblock__form__passwordInput"
               type="password"
+              size="lg"
               placeholder="Password"
               value={this.state.password}
               onChange={this.handleChange}
             />
           </Form.Group>
           {this.state.errMsg ? (
-            <p className="loginblock_err">{this.state.errMsg}</p>
+            <p className="loginblock__err">{this.state.errMsg}</p>
           ) : null}
-          <Button variant="primary" type="submit">
+          <Button
+            variant="primary"
+            type="submit"
+            className="loginblock__button btn-lg btn-block"
+          >
             Login
           </Button>
-          <Link to="/newuser"> Not registered? </Link>
+          <Link to="/newuser" className="loginblock__registerlink">
+            {" "}
+            Not registered?{" "}
+          </Link>
         </Form>
       </div>
     );

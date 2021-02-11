@@ -54,31 +54,20 @@ class RegisterPage extends Component {
           this.setState({ errMsg: "username has been taken", password: "" });
         });
     }
-    // const letterRegex = {
-    //   reg: /[a-z]+/i,
-    //   msg: "must contain at least 1 letter",
-    // };
-    // const numberRegex = {
-    //   reg: /[1-9]+/,
-    //   msg: "must contain at least 1 number",
-    // };
-    // const specialCharRegex = {
-    //   reg: /[^\w\s]/,
-    //   msg: "must contain at least 1 special character",
-    // };
-    // if (event.target[1].value) console.dir(event.target[1]);
   };
 
   render() {
     return (
       <div className="registerpage">
         <Form className="registerform" onSubmit={this.handleSubmit}>
+          <h1 className="font-weight-bold">Hello, new user</h1>
           <Form.Group controlId="registerform__username">
             <Form.Label className="registerform__usernamelabel">
               Username
             </Form.Label>
             <Form.Control
               className="registerform__usernameinput"
+              size="lg"
               type="username"
               placeholder="Enter username"
               onChange={this.handleChange}
@@ -92,6 +81,7 @@ class RegisterPage extends Component {
             </Form.Label>
             <Form.Control
               className="registerform__passwordinput"
+              size="lg"
               type="password"
               placeholder="Password"
               onChange={this.handleChange}
@@ -105,6 +95,7 @@ class RegisterPage extends Component {
             </Form.Label>
             <Form.Control
               className="registerform__realnameinput"
+              size="lg"
               type="name"
               placeholder="Name"
               onChange={this.handleChange}
@@ -121,12 +112,14 @@ class RegisterPage extends Component {
           <Button
             variant="primary"
             type="submit"
-            className="registerform__registerbutton"
+            className="registerform__registerbutton btn-lg btn-block"
           >
             Register
           </Button>
 
-          <Link to="/login">Already a user?</Link>
+          <Link to="/login" className="loginblock__registerlink">
+            Already a user?
+          </Link>
         </Form>
         {this.state.errMsg ? (
           <p className="registerpage__err">{this.state.errMsg}</p>
