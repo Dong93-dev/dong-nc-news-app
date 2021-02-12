@@ -29,7 +29,7 @@ class TopicList extends Component {
           {this.state.topics.map((topic) => (
             <TopicCard key={topic.slug} {...topic} path={this.props.path} />
           ))}
-          <Link to="/topics/newtopic">
+          <Link to={this.props.authorization ? "/topics/newtopic" : "/login"}>
             <div className="topicpage__addTopic">
               <button className="topicpage__addTopicButton">+</button>
             </div>
@@ -52,17 +52,13 @@ class TopicList extends Component {
               <TopicCard key={topic.slug} {...topic} path={this.props.path} />
             ))}
           </ul>
-          <Link to="/topics/newtopic">
+          <Link to={this.props.authorization ? "/topics/newtopic" : "/login"}>
             <div className="topiclist__addTopic">
               <button className="topiclist__addTopicButton--text">
                 Add a topic
               </button>
             </div>
           </Link>
-
-          {this.props.path === "/" ? (
-            <p className="topiclist__p">Straight in</p>
-          ) : null}
         </Collapsible>
       </nav>
     );

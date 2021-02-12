@@ -1,104 +1,101 @@
 import React, { Component } from "react";
 import * as api from "../api";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 class NewTopicForm extends Component {
-  state = { slug: "", description: "", warningMsg: "", topics: [] };
+  state = { slug: "", description: "", topics: [], warnMsg: "" };
   componentDidMount() {
+    const slug = JSON.parse(localStorage.getItem("slug"));
+    const description = JSON.parse(localStorage.getItem("description"));
     api.fetchAllTopics().then(({ topics }) => {
-      this.setState({ topics: topics });
+      const stateObj = {};
+      if (slug) stateObj.slug = slug;
+      if (description) stateObj.description = description;
+      this.setState({ topics, ...stateObj });
     });
   }
 
   render() {
     return (
       <div className="newtopicformblock">
-        <form onSubmit={this.handleSubmit} className="newtopicform__form">
-          <label className="newtopicform__form__slug">
-            Please give a slug
-            <input
-              type="text"
-              id="slug"
-              value={this.state.slug}
-              onChange={this.handleInput}
-            />
-          </label>
-          <label className="newtopicform__form__description">
-            Please give a description for this slug
-            <input
-              type="text"
-              id="description"
-              value={this.state.description}
-              onChange={this.handleInput}
-            />
-          </label>
-          {this.state.warningMsg ? (
-            <p className="newtopicform__form_wanring">this.state.warningMsg</p>
-          ) : null}
-          <button
-            type="submit"
-            onClick={this.handleSubmit}
-            className="newtopicform__form__submitbutton"
-          >
-            Create
-          </button>
-          <Link to="/">
-            <button>Home Page</button>
-          </Link>
-        </form>
         <h1 className="newtopicformblock__title">Let's create a new topic</h1>
         <Form
           className="newtopicformblock__newtopicform"
           onSubmit={this.handleSubmit}
         >
-          <Form.Group controlId="exampleForm.ControlInput1">
+          <Form.Group controlId="slug">
             <Form.Label>New topic name</Form.Label>
-            <Form.Control type="text" placeholder="New topic name" />
+            <Form.Control
+              type="text"
+              placeholder="New topic name"
+              value={this.state.slug}
+              onChange={this.handleInput}
+            />
           </Form.Group>
 
-          <Form.Group controlId="exampleForm.ControlTextarea1">
+          <Form.Group controlId="description">
             <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" rows={4} />
+            <Form.Control
+              as="textarea"
+              rows={5}
+              onChange={this.handleInput}
+              value={this.state.description}
+              placeholder="An attractive description"
+            />
           </Form.Group>
+          {this.state.warnMsg ? <p>{this.state.warnMsg}</p> : null}
           <Button
-            disabled={!this.props.authorization}
+            disabled={!this.state.slug || !this.state.description}
             variant="primary"
             type="submit"
-            className=" btn-lg btn-block"
+            className=" btn-lg btn-block createbtn"
           >
             Create
           </Button>
-          <Button
-            variant="primary"
-            type="discard"
-            className=" btn-lg btn-block"
-          >
-            Discard
-          </Button>
+          <Link to="/">
+            <Button
+              variant="primary"
+              type="discard"
+              className=" btn-lg btn-block"
+              onClick={() => {
+                localStorage.removeItem("slug");
+                localStorage.removeItem("description");
+              }}
+            >
+              Discard
+            </Button>
+          </Link>
         </Form>
       </div>
     );
   }
 
   handleInput = (event) => {
-    this.setState({ [event.target.id]: event.target.value, warningMsg: "" });
+    this.setState({ [event.target.id]: event.target.value }, () => {
+      localStorage.setItem(event.target.id, JSON.stringify(event.target.value));
+    });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state.slug, "slug", this.state.description, "description");
-    console.log(this.state.slug !== "" && this.state.description !== "");
-    // to consider the the same slug is posted
-    if (this.state.slug !== "" && this.state.description !== "") {
-      api.postTopic({
-        slug: this.state.slug,
-        description: this.state.description,
-      });
-      this.setState({ slug: "", description: "" });
+    const isTopicExist =
+      this.state.topics.filter((topic) => topic.slug === event.target[0].value)
+        .length > 0;
+    if (isTopicExist) {
+      this.setState({ warnMsg: "this topic has existed" });
     } else {
-      this.setState({ warningMsg: "slug or description cannot be empty" });
+      api
+        .postTopic({
+          slug: this.state.slug,
+          description: this.state.description,
+        })
+        .then(() => {
+          navigate("/");
+          localStorage.removeItem("slug");
+          localStorage.removeItem("description");
+        });
     }
   };
 }

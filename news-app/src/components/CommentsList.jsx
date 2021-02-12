@@ -6,26 +6,76 @@ import ErrorDisplayer from "./ErrorDisplayer";
 import Loader from "./Loader";
 import NewCommentForm from "./NewCommentForm";
 import { Link, navigate } from "@reach/router";
+import Pagination from "react-bootstrap-4-pagination";
 
 class CommentsList extends Component {
   state = {
     isLoading: true,
     comments: [],
     errMsg: "",
+    limit: 10,
+    page: 1,
   };
 
   componentDidMount() {
-    fetchCommentsByArticleId(this.props.articleId)
+    fetchCommentsByArticleId(
+      this.props.articleId,
+      this.state.limit,
+      this.state.page
+    )
       .then(({ total_count, comments }) => {
-        this.setState({
-          comments,
-          comment_count: Number(total_count),
-          isLoading: false,
+        this.setState((currentState) => {
+          return {
+            comments,
+            comment_count: Number(total_count),
+            isLoading: false,
+            paginationConfig: {
+              totalPages: Math.ceil(Number(total_count) / this.state.limit),
+              currentPage: currentState.page,
+              showMax: 5,
+              size: "sm",
+              threeDots: true,
+              prevNext: true,
+              onClick: (page) => {
+                this.setState({ page });
+              },
+            },
+          };
         });
       })
       .catch((err) => this.setState({ errMsg: err.msg, isLoading: false }));
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.page !== this.state.page) {
+      fetchCommentsByArticleId(
+        this.props.articleId,
+        this.state.limit,
+        this.state.page
+      )
+        .then(({ total_count, comments }) => {
+          this.setState((currentState) => {
+            return {
+              comments,
+              comment_count: Number(total_count),
+              isLoading: false,
+              paginationConfig: {
+                totalPages: Math.ceil(Number(total_count) / this.state.limit),
+                currentPage: currentState.page,
+                showMax: 5,
+                size: "sm",
+                threeDots: true,
+                prevNext: true,
+                onClick: (page) => {
+                  this.setState({ page });
+                },
+              },
+            };
+          });
+        })
+        .catch((err) => this.setState({ errMsg: err.msg, isLoading: false }));
+    }
+  }
   render() {
     if (this.state.isLoading) return <Loader />;
     if (this.state.errMsg) return <ErrorDisplayer msg={this.state.errMsg} />;
@@ -34,9 +84,11 @@ class CommentsList extends Component {
       <div className="CommentsListBlock">
         <NewCommentForm
           postNewComment={this.postNewComment}
+          articleId={this.props.articleId}
           username={this.props.username}
           authorization={this.props.authorization}
         />
+
         <h1 className="CommentsListBlock__commentcount">
           Total comment: {this.state.comment_count}
         </h1>
@@ -57,6 +109,7 @@ class CommentsList extends Component {
             />
           ))}
         </div>
+        <Pagination {...this.state.paginationConfig} />
 
         {this.props.authorization ? null : (
           <div className="articlePage__othercomments">
@@ -75,27 +128,36 @@ class CommentsList extends Component {
   }
 
   postNewComment = (comment) => {
-    postComment(this.props.articleId, comment).then(({ comment }) =>
-      this.setState((currentState) => {
-        return {
-          comments: [comment, ...currentState.comments],
-          total_count: currentState.total_count + 1,
-        };
-      })
-    );
+    this.setState((currentState) => {
+      return {
+        comments: [comment, ...currentState.comments],
+        comment_count: currentState.comment_count + 1,
+      };
+    });
   };
 
   removeComment = (commentId) => {
-    deleteComment(commentId).then(() =>
-      this.setState((currentState) => {
+    const commentsBeforeDel = [...this.state.comments];
+    this.setState(
+      (currentState) => {
         const commentsAfterDel = currentState.comments.filter(
           (comment) => comment.comment_id !== commentId
         );
         return {
           comments: commentsAfterDel,
-          total_count: currentState.total_count - 1,
+          comment_count: currentState.comment_count - 1,
         };
-      })
+      },
+      () => {
+        deleteComment(commentId).catch((err) =>
+          this.setState((currentState) => {
+            return {
+              comments: commentsBeforeDel,
+              comment_count: currentState.comment_count + 1,
+            };
+          })
+        );
+      }
     );
   };
 }

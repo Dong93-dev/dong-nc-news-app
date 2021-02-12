@@ -14,17 +14,17 @@ export const postTopic = (topic) => {
   return request.post("/topics", topic);
 };
 
-export const fetchAllArticlesByTopic = (topic, sort_by, order) => {
+export const fetchAllArticlesByTopic = (topic, sort_by, order, limit, p) => {
   return request
-    .get("/articles", { params: { topic, sort_by, order } })
+    .get("/articles", { params: { topic, sort_by, order, limit, p } })
     .then(({ data }) => {
       return data;
     });
 };
 
-export const fetchCommentsByArticleId = (articleId, sort_by, order) => {
+export const fetchCommentsByArticleId = (articleId, limit, p) => {
   return request
-    .get(`/articles/${articleId}/comments`, { params: { sort_by, order } })
+    .get(`/articles/${articleId}/comments`, { params: { limit, p } })
     .then(({ data }) => data);
 };
 

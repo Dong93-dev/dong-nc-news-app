@@ -1,7 +1,7 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Title from "./components/Title";
-import { Router, Link } from "@reach/router";
+import { Router, Link, navigate } from "@reach/router";
 import TopicList from "./components/TopicList";
 import NewTopicForm from "./components/NewTopicForm";
 import ArticleList from "./components/ArticleList";
@@ -35,13 +35,19 @@ class App extends Component {
         <Router>
           <RegisterPage path="/newuser" changeUsername={this.changeUsername} />
           <LogIn path="/login" changeUsername={this.changeUsername} />
-          <TopicList path="/" />
+          <TopicList
+            path="/"
+            authorization={this.state.authorization}
+            username={this.state.username}
+          />
           <TopicList path="/topics" />
+
           <NewTopicForm
             path="/topics/newtopic"
             authorization={this.state.authorization}
             username={this.state.username}
           />
+
           <ArticleList path="/topics/articles/*" />
           <ArticlePage
             path="/article/:articleId"

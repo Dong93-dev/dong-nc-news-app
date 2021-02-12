@@ -109,6 +109,9 @@ class RegisterPage extends Component {
             ) : null}
           </Form.Group>
 
+          {this.state.errMsg ? (
+            <p className="registerpage__err">{this.state.errMsg}</p>
+          ) : null}
           <Button
             variant="primary"
             type="submit"
@@ -121,9 +124,6 @@ class RegisterPage extends Component {
             Already a user?
           </Link>
         </Form>
-        {this.state.errMsg ? (
-          <p className="registerpage__err">{this.state.errMsg}</p>
-        ) : null}
       </div>
     );
   }

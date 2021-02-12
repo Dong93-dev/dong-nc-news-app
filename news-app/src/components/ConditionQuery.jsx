@@ -25,7 +25,7 @@ function ConditionQuery(props) {
   return (
     <div className={`${props.blockName}__conditionblock`}>
       <div className={`${props.blockName}__orderbutton`}>
-        <Button variant="primary" onClick={handleClick} size="lg">
+        <Button variant="primary" onClick={handleClick} size="md">
           order: low-high
         </Button>{" "}
       </div>
@@ -34,7 +34,7 @@ function ConditionQuery(props) {
         id={`dropdown-split-variants-primary`}
         variant="primary"
         title="sort by"
-        size="lg"
+        size="md"
         className={`${props.blockName}__sortbydropdown`}
       >
         <Dropdown.Item eventKey="created_at" onSelect={handleSelect} active>

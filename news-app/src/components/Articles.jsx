@@ -4,20 +4,25 @@ import ArticleCard from "./ArticleCard";
 import ArticlesConditionQuery from "./ConditionQuery";
 import ErrorDisplayer from "./ErrorDisplayer";
 import Loader from "./Loader";
+import Pagination from "react-bootstrap-4-pagination";
 
 class Articles extends Component {
   state = {
     articles: [],
+    limit: 10,
+    page: 1,
     isLoading: true,
     errMsg: "",
   };
 
-  fetchArticlesByTopic = (topic, sort_by, order) => {
+  fetchArticlesByTopic = (topic, sort_by, order, limit, page) => {
     api
       .fetchAllArticlesByTopic(
         topic === "*" ? undefined : topic,
         sort_by,
-        order
+        order,
+        limit,
+        page
       )
       .then(({ articles, total_count }) =>
         this.setState({
@@ -27,6 +32,17 @@ class Articles extends Component {
           sort_by,
           order,
           isLoading: false,
+          paginationConfig: {
+            totalPages: Math.ceil(total_count / limit),
+            currentPage: page,
+            showMax: 3,
+            size: "md",
+            threeDots: true,
+            prevNext: true,
+            onClick: (page) => {
+              this.setState({ page });
+            },
+          },
         })
       )
       .catch((err) => this.setState({ errMsg: err.msg, isLoading: false }));
@@ -36,13 +52,29 @@ class Articles extends Component {
     this.fetchArticlesByTopic(
       this.props.topic,
       this.state.sort_by,
-      this.state.order
+      this.state.order,
+      this.state.limit,
+      this.state.page
     );
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.topic !== this.props.topic) {
-      this.fetchArticlesByTopic(this.props.topic);
+      this.fetchArticlesByTopic(
+        this.props.topic,
+        prevState.sort_by,
+        prevState.order,
+        prevState.limit,
+        1
+      );
+    } else if (prevState.page !== this.state.page) {
+      this.fetchArticlesByTopic(
+        this.props.topic,
+        prevState.sort_by,
+        prevState.order,
+        prevState.limit,
+        this.state.page
+      );
     }
   }
 
@@ -59,7 +91,7 @@ class Articles extends Component {
               ? `All Topics`
               : `Topics: ${this.props.topic}`}
           </h1>
-          <p className="articleslistblock__count">{`Number of articles: ${this.state.total_count}`}</p>
+          <h1 className="articleslistblock__count">{`Number of articles: ${this.state.total_count}`}</h1>
         </div>
         <ArticlesConditionQuery
           changeSortBy={this.changeSortBy}
@@ -72,15 +104,28 @@ class Articles extends Component {
             <ArticleCard key={article.article_id} article={article} />
           ))}
         </ul>
+        <Pagination {...this.state.paginationConfig} className="pagination" />
       </div>
     );
   }
 
   changeSortBy = (sort_by) => {
-    this.fetchArticlesByTopic(this.state.topic, sort_by, this.state.order);
+    this.fetchArticlesByTopic(
+      this.state.topic,
+      sort_by,
+      this.state.order,
+      this.state.limit,
+      this.state.page
+    );
   };
   changeOrder = (order) => {
-    this.fetchArticlesByTopic(this.state.topic, this.state.sort_by, order);
+    this.fetchArticlesByTopic(
+      this.state.topic,
+      this.state.sort_by,
+      order,
+      this.state.limit,
+      this.state.page
+    );
   };
 }
 

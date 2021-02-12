@@ -4,9 +4,12 @@ import SingleArticle from "./SingleArticle";
 import CommentsList from "./CommentsList";
 import TopicList from "./TopicList";
 import Loader from "./Loader";
+import TopicsPanel from "./TopicsPanel";
+
 function ArticlePage(props) {
   return (
     <div className="articlePage">
+      <TopicsPanel />
       <SingleArticle
         articleId={props.articleId}
         username={props.username}

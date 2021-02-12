@@ -1,7 +1,7 @@
 import React from "react";
 
 function ErrorDisplayer({ msg }) {
-  return <h1>{msg ? msg : "whoops! wrong path"}</h1>;
+  return <h1 className="requesterror">{msg ? msg : "whoops! wrong path"}</h1>;
 }
 
 export default ErrorDisplayer;

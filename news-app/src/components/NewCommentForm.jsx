@@ -1,19 +1,41 @@
 import React, { Component } from "react";
+import { postComment } from "../api";
+import Spinner from "react-bootstrap/Spinner";
 
 class NewCommentForm extends Component {
   state = {
     body: "",
+    isLoading: false,
+    postCommentErrMsg: "",
+  };
+  handleChange = (event) => {
+    this.setState({ body: event.target.value, postCommentErrMsg: "" }, () => {
+      if (this.props.username)
+        localStorage.setItem("body", JSON.stringify(event.target.value));
+    });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.state.body) {
-      const comment = { body: this.state.body, username: this.props.username };
-      this.setState({ body: "" }, () => {
-        localStorage.setItem("body", JSON.stringify(""));
-        this.props.postNewComment(comment);
-      });
-    }
+
+    const comment = { body: this.state.body, username: this.props.username };
+
+    this.setState({ body: "", isLoading: true }, () => {
+      postComment(this.props.articleId, comment)
+        .then(({ comment }) => {
+          this.props.postNewComment(comment);
+        })
+        .then(() => localStorage.removeItem("body"))
+        .then(() => this.setState({ isLoading: false }))
+        .catch((err) => {
+          this.setState((currentState) => {
+            return {
+              postCommentErrMsg: "you are offline",
+              isLoading: false,
+            };
+          });
+        });
+    });
   };
 
   componentDidMount() {
@@ -60,15 +82,15 @@ class NewCommentForm extends Component {
             </button>
           )}
         </form>
+        {this.state.postCommentErrMsg ? (
+          <p className="cnewomment__err requesterror">
+            {this.state.postCommentErrMsg}
+          </p>
+        ) : null}
+        {this.state.isLoading ? <Spinner animation="border" /> : null}
       </div>
     );
   }
-  handleChange = (event) => {
-    this.setState({ body: event.target.value }, () => {
-      if (this.props.username)
-        localStorage.setItem("body", JSON.stringify(event.target.value));
-    });
-  };
 }
 
 export default NewCommentForm;

@@ -11,6 +11,7 @@ function WelcomeAndSignout(props) {
         onClick={() => {
           props.emptyUserConfig();
           localStorage.removeItem("userConfig");
+          localStorage.removeItem("body");
         }}
       >
         Sign out

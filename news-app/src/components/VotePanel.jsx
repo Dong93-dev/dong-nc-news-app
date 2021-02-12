@@ -34,7 +34,7 @@ function VotePanel(props) {
         </button>
       </div>
       {props.errMsg ? (
-        <p className={`${props.blockName}__err`}>{props.errMsg}</p>
+        <p className={`${props.blockName}__err requesterror`}>{props.errMsg}</p>
       ) : null}
     </div>
   );
