@@ -24,7 +24,7 @@ class TopicsPanel extends Component {
     if (this.state.topics.length === 0) return <h1>No topics for now</h1>;
     return (
       <nav className="topicpanel">
-        <h1 className="topicpanel__title">Choose a title</h1>
+        <h1 className="topicpanel__title">Choose a topic</h1>
         <ul className="topicpanel__ul">
           {this.state.topics.map((topic) => (
             <TopicCard key={topic.slug} {...topic} path={this.props.path} />
