@@ -26,6 +26,7 @@ class TopicsPanel extends Component {
       <nav className="topicpanel">
         <h1 className="topicpanel__title">Choose a topic</h1>
         <ul className="topicpanel__ul">
+          <TopicCard key={"all"} slug="all" path={this.props.path} />
           {this.state.topics.map((topic) => (
             <TopicCard key={topic.slug} {...topic} path={this.props.path} />
           ))}

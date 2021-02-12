@@ -510,7 +510,6 @@ span.Collapsible__trigger.is-open:hover {
 }
 
 .articlePage__othercomments {
-  border: 2px solid grey;
   text-align: center;
   border: none;
   width: 100%;
@@ -531,7 +530,7 @@ span.Collapsible__trigger.is-open:hover {
   height: fit-content;
   text-decoration: none;
   font-weight: 600;
-  border: 10px rgba(128 128 128 0.5) solid;
+  border: 2px solid black;
   border-radius: 2rem;
   transition: 0.3s all ease-in-out;
 }

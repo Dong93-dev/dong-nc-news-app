@@ -20,7 +20,7 @@ class ArticlesList extends Component {
     this.setState({ reLoading: true }, () => {
       api
         .fetchAllArticlesByTopic(
-          topic === "*" ? undefined : topic,
+          topic === "all" ? undefined : topic,
           sort_by,
           order,
           limit,

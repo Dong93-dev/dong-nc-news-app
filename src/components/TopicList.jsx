@@ -37,7 +37,7 @@ class TopicList extends Component {
         </ul>
         <p className="topicpage__straightin">
           {" "}
-          <Link to="/topics/articles/*">All articles >></Link>
+          <Link to="/topics/articles/all">All articles >></Link>
         </p>
       </div>
     ) : (
@@ -49,6 +49,7 @@ class TopicList extends Component {
           overflowWhenOpen="scroll"
         >
           <ul className="topiclist__ul">
+            <TopicCard key={"all"} slug="all" path={this.props.path} />
             {this.state.topics.map((topic) => (
               <TopicCard key={topic.slug} {...topic} path={this.props.path} />
             ))}
