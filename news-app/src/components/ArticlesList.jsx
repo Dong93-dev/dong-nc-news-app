@@ -1,51 +1,58 @@
 import React, { Component } from "react";
 import * as api from "../api";
 import ArticleCard from "./ArticleCard";
-import ArticlesConditionQuery from "./ConditionQuery";
+import SortSelector from "./SortSelector";
 import ErrorDisplayer from "./ErrorDisplayer";
 import Loader from "./Loader";
 import Pagination from "react-bootstrap-4-pagination";
 
-class Articles extends Component {
+class ArticlesList extends Component {
   state = {
     articles: [],
     limit: 10,
     page: 1,
     isLoading: true,
     errMsg: "",
+    reLoading: false,
   };
 
   fetchArticlesByTopic = (topic, sort_by, order, limit, page) => {
-    api
-      .fetchAllArticlesByTopic(
-        topic === "*" ? undefined : topic,
-        sort_by,
-        order,
-        limit,
-        page
-      )
-      .then(({ articles, total_count }) =>
-        this.setState({
-          topic: this.props.topic,
-          articles,
-          total_count,
+    this.setState({ reLoading: true }, () => {
+      api
+        .fetchAllArticlesByTopic(
+          topic === "*" ? undefined : topic,
           sort_by,
           order,
-          isLoading: false,
-          paginationConfig: {
-            totalPages: Math.ceil(total_count / limit),
-            currentPage: page,
-            showMax: 3,
-            size: "md",
-            threeDots: true,
-            prevNext: true,
-            onClick: (page) => {
-              this.setState({ page });
+          limit,
+          page
+        )
+        .then(({ articles, total_count }) => {
+          this.setState({
+            topic: this.props.topic,
+            articles,
+            total_count,
+            sort_by,
+            order,
+            isLoading: false,
+            reLoading: false,
+            paginationConfig: {
+              totalPages: Math.ceil(total_count / limit),
+              currentPage: page,
+              showMax: 3,
+              size: "md",
+              threeDots: true,
+              prevNext: true,
+              onClick: (page) => {
+                this.setState({ page });
+              },
             },
-          },
+          });
         })
-      )
-      .catch((err) => this.setState({ errMsg: err.msg, isLoading: false }));
+        .catch((err) => {
+          console.log(err.response.data.msg);
+          this.setState({ errMsg: err.response.data.msg, isLoading: false });
+        });
+    });
   };
 
   componentDidMount() {
@@ -79,8 +86,8 @@ class Articles extends Component {
   }
 
   render() {
-    if (this.isLoading) return <Loader />;
-    if (this.errMsg) return <ErrorDisplayer msg={this.errMsg} />;
+    if (this.state.isLoading) return <Loader />;
+    if (this.state.errMsg) return <ErrorDisplayer msg={this.state.errMsg} />;
     if (this.state.articles.length === 0)
       return <h1>No articles found for this topic</h1>;
     return (
@@ -93,17 +100,20 @@ class Articles extends Component {
           </h1>
           <h1 className="articleslistblock__count">{`Number of articles: ${this.state.total_count}`}</h1>
         </div>
-        <ArticlesConditionQuery
+        <SortSelector
           changeSortBy={this.changeSortBy}
           changeOrder={this.changeOrder}
           blockName="articleslistblock"
         />
-
-        <ul className="articleslistblock_ul">
-          {this.state.articles.map((article) => (
-            <ArticleCard key={article.article_id} article={article} />
-          ))}
-        </ul>
+        {this.state.reLoading ? (
+          <Loader />
+        ) : (
+          <ul className="articleslistblock_ul">
+            {this.state.articles.map((article) => (
+              <ArticleCard key={article.article_id} article={article} />
+            ))}
+          </ul>
+        )}
 
         {this.props.authorization ? (
           <Pagination {...this.state.paginationConfig} className="pagination" />
@@ -132,4 +142,4 @@ class Articles extends Component {
   };
 }
 
-export default Articles;
+export default ArticlesList;

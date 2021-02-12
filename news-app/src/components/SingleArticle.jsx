@@ -12,7 +12,9 @@ class SingleArticle extends Component {
       .then((data) => {
         this.setState({ article: data.article, isLoading: false });
       })
-      .catch((err) => this.setState({ errMsg: err.msg, isLoading: false }));
+      .catch((err) =>
+        this.setState({ errMsg: err.response.data.msg, isLoading: false })
+      );
   }
   render() {
     if (this.state.isLoading) return <Loader />;

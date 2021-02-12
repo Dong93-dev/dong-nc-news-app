@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import TopicList from "./TopicList";
 import { Router } from "@reach/router";
-import Articles from "./Articles";
+import ArticlesList from "./ArticlesList";
 import TopicsPanel from "./TopicsPanel";
 
-class ArticleList extends Component {
+class ArticlesBoard extends Component {
   state = { topic: "" };
 
   render() {
@@ -16,7 +16,7 @@ class ArticleList extends Component {
         />
         <TopicList path={this.props.path} changeTopic={this.changeTopic} />
         <Router>
-          <Articles
+          <ArticlesList
             path="/:topic"
             authorization={this.props.authorization}
             username={this.props.username}
@@ -30,4 +30,4 @@ class ArticleList extends Component {
   };
 }
 
-export default ArticleList;
+export default ArticlesBoard;

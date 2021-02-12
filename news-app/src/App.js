@@ -4,12 +4,13 @@ import Title from "./components/Title";
 import { Router, Link, navigate } from "@reach/router";
 import TopicList from "./components/TopicList";
 import NewTopicForm from "./components/NewTopicForm";
-import ArticleList from "./components/ArticleList";
+
 import ArticlePage from "./components/ArticlePage";
 import ErrorDisplayer from "./components/ErrorDisplayer";
 import RegisterPage from "./components/RegisterPage";
 import LogIn from "./components/LogIn";
 import React, { Component } from "react";
+import ArticlesBoard from "./components/ArticlesBoard";
 
 class App extends Component {
   state = {
@@ -48,7 +49,7 @@ class App extends Component {
             username={this.state.username}
           />
 
-          <ArticleList
+          <ArticlesBoard
             path="/topics/articles/*"
             authorization={this.state.authorization}
             username={this.state.username}
