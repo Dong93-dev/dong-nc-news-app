@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchCommentsByArticleId, postComment, deleteComment } from "../api";
+import { fetchCommentsByArticleId, postComment } from "../api";
 import CommentCard from "./CommentCard";
 import ConditionQuery from "./SortSelector";
 import ErrorDisplayer from "./ErrorDisplayer";
@@ -151,28 +151,15 @@ class CommentsList extends Component {
   };
 
   removeComment = (commentId) => {
-    const commentsBeforeDel = [...this.state.comments];
-    this.setState(
-      (currentState) => {
-        const commentsAfterDel = currentState.comments.filter(
-          (comment) => comment.comment_id !== commentId
-        );
-        return {
-          comments: commentsAfterDel,
-          comment_count: currentState.comment_count - 1,
-        };
-      },
-      () => {
-        deleteComment(commentId, this.props.authorization).catch((err) =>
-          this.setState((currentState) => {
-            return {
-              comments: commentsBeforeDel,
-              comment_count: currentState.comment_count + 1,
-            };
-          })
-        );
-      }
-    );
+    this.setState((currentState) => {
+      const commentsAfterDel = currentState.comments.filter(
+        (comment) => comment.comment_id !== commentId
+      );
+      return {
+        comments: commentsAfterDel,
+        comment_count: currentState.comment_count - 1,
+      };
+    });
   };
 }
 

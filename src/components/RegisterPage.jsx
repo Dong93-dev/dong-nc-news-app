@@ -49,7 +49,7 @@ class RegisterPage extends Component {
           this.props.changeUsername(user.username, token);
         })
         .then(() => {
-          navigate(-1);
+          navigate(-2);
         })
         .catch((err) => {
           this.setState({ errMsg: "username has been taken", password: "" });

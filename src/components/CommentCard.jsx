@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { patchCommentById } from "../api";
+import { patchCommentById, deleteComment } from "../api";
+import ErrorDisplayer from "./ErrorDisplayer";
+
 import Loader from "./Loader";
 import VotePanel from "./VotePanel";
 
 class CommentCard extends Component {
-  state = { isLoading: true, errMsgVotePanel: "" };
+  state = { isLoading: true, errMsgVotePanel: "", errMsg: "" };
 
   componentDidMount() {
     this.setState({ comment: this.props.comment, isLoading: false });
@@ -16,6 +18,7 @@ class CommentCard extends Component {
     return (
       <div className="commentcard">
         {/* <div className="commentcard_avatar"><img src={this.state.} alt="placeholder"/></div> */}
+        {this.state.errMsg ? <ErrorDisplayer msg={this.state.errMsg} /> : null}
         <p className="commentcard__authortime">
           {this.state.comment.author} at{" "}
           {`${this.state.comment.created_at
@@ -49,35 +52,53 @@ class CommentCard extends Component {
   }
 
   handleClick = () => {
-    this.props.removeComment(this.state.comment.comment_id);
+    deleteComment(this.state.comment.comment_id, this.props.authorization)
+      .then(() => {
+        this.props.removeComment(this.state.comment.comment_id);
+      })
+      .catch((err) =>
+        this.setState((currentState) => {
+          return {
+            errMsg: err.response.data.msg.includes("Bad request")
+              ? "this comment already deleted"
+              : "you are offline",
+          };
+        })
+      );
   };
   changeVote = (isUpVote) => {
     const vote = isUpVote ? 1 : -1;
-    this.setState((currentState) => {
-      return {
-        comment: {
-          ...currentState.comment,
-          votes: currentState.comment.votes + vote,
-        },
-        errMsgVotePanel: "",
-      };
-    });
-
-    patchCommentById(
-      this.state.comment.comment_id,
-      vote,
-      this.props.authorization
-    ).catch((err) => {
-      this.setState((currentState) => {
+    this.setState(
+      (currentState) => {
         return {
           comment: {
             ...currentState.comment,
-            votes: currentState.comment.votes - vote,
+            votes: currentState.comment.votes + vote,
           },
-          errMsgVotePanel: "you are offline",
+          errMsgVotePanel: "",
         };
-      });
-    });
+      },
+      () => {
+        patchCommentById(
+          this.state.comment.comment_id,
+          vote,
+          this.props.authorization
+        ).catch((err) => {
+          this.setState((currentState) => {
+            return {
+              comment: {
+                ...currentState.comment,
+                votes: currentState.comment.votes - vote,
+              },
+
+              errMsgVotePanel: err.response.data.msg.includes("No comment")
+                ? "this comment already deleted"
+                : "you are offline",
+            };
+          });
+        });
+      }
+    );
   };
 }
 
