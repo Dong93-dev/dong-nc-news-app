@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { postUser, login } from "../api";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 
 class RegisterPage extends Component {
   state = {
@@ -15,7 +15,6 @@ class RegisterPage extends Component {
   };
 
   handleChange = (event) => {
-    console.dir(this.props);
     const firstLastNameRegex = {
       reg: /^[a-z\s-']*$/i,
       msg: "only allow letter, spaces, hyphens and  apostrophes",
@@ -48,7 +47,9 @@ class RegisterPage extends Component {
         })
         .then(([user, { token }]) => {
           this.props.changeUsername(user.username, token);
-          this.props.navigate("/");
+        })
+        .then(() => {
+          navigate(-1);
         })
         .catch((err) => {
           this.setState({ errMsg: "username has been taken", password: "" });

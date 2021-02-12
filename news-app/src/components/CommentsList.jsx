@@ -109,7 +109,9 @@ class CommentsList extends Component {
             />
           ))}
         </div>
-        <Pagination {...this.state.paginationConfig} />
+        {this.props.authorization ? (
+          <Pagination {...this.state.paginationConfig} />
+        ) : null}
 
         {this.props.authorization ? null : (
           <div className="articlePage__othercomments">
@@ -149,7 +151,7 @@ class CommentsList extends Component {
         };
       },
       () => {
-        deleteComment(commentId).catch((err) =>
+        deleteComment(commentId, this.props.authorization).catch((err) =>
           this.setState((currentState) => {
             return {
               comments: commentsBeforeDel,

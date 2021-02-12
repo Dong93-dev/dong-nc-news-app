@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import { login } from "../api";
+import Loader from "./Loader";
 import styled from "styled-components";
 
 class LogIn extends Component {
@@ -10,6 +11,7 @@ class LogIn extends Component {
     username: "",
     password: "",
     errMsg: "",
+    isLoading: true,
   };
 
   handleChange = (event) => {
@@ -28,18 +30,20 @@ class LogIn extends Component {
       login(this.state.username, this.state.password)
         .then(({ token }) => {
           this.props.changeUsername(this.state.username, token);
-          this.props.navigate("/");
         })
+        .then(() => navigate(-1))
         .catch((err) => {
           this.setState({ errMsg: "please check your username and password" });
         });
     }
-
-    //  this.props.history.push('/dashboard')
-    // loginIn;
   };
 
+  componentDidMount() {
+    this.setState({ isLoading: false });
+  }
+
   render() {
+    if (this.state.isLoading) return <Loader />;
     return (
       <div className="loginblock">
         <Form className="loginblock__form" onSubmit={this.handleSubmit}>

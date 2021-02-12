@@ -87,10 +87,13 @@ class NewTopicForm extends Component {
       this.setState({ warnMsg: "this topic has existed" });
     } else {
       api
-        .postTopic({
-          slug: this.state.slug,
-          description: this.state.description,
-        })
+        .postTopic(
+          {
+            slug: this.state.slug,
+            description: this.state.description,
+          },
+          this.props.authorization
+        )
         .then(() => {
           navigate("/");
           localStorage.removeItem("slug");

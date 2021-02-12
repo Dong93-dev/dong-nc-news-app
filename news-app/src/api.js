@@ -10,8 +10,12 @@ export const fetchAllTopics = () => {
   });
 };
 
-export const postTopic = (topic) => {
-  return request.post("/topics", topic);
+export const postTopic = (topic, authorization) => {
+  return request.post("/topics", topic, {
+    headers: {
+      authorization,
+    },
+  });
 };
 
 export const fetchAllArticlesByTopic = (topic, sort_by, order, limit, p) => {
@@ -28,26 +32,48 @@ export const fetchCommentsByArticleId = (articleId, limit, p) => {
     .then(({ data }) => data);
 };
 
-export const patchCommentById = (commentId, vote) => {
-  return request.patch(`/comments/${commentId}`, { inc_votes: vote });
+export const patchCommentById = (commentId, vote, authorization) => {
+  return request.patch(
+    `/comments/${commentId}`,
+    { inc_votes: vote },
+    {
+      headers: {
+        authorization,
+      },
+    }
+  );
 };
 
 export const fetchArticleById = (articleId) => {
   return request.get(`/articles/${articleId}`).then(({ data }) => data);
 };
 
-export const patchArticleVotebyId = (articleId, vote) => {
-  return request.patch(`/articles/${articleId}`, { inc_votes: vote });
+export const patchArticleVotebyId = (articleId, vote, authorization) => {
+  return request.patch(
+    `/articles/${articleId}`,
+    { inc_votes: vote },
+    {
+      headers: { authorization },
+    }
+  );
 };
 
-export const postComment = (articleId, { username, body }) => {
+export const postComment = (articleId, { username, body }, authorization) => {
   return request
-    .post(`/articles/${articleId}/comments`, { username, body })
+    .post(
+      `/articles/${articleId}/comments`,
+      { username, body },
+      {
+        headers: { authorization },
+      }
+    )
     .then(({ data }) => data);
 };
 
-export const deleteComment = (commentId) => {
-  return request.delete(`/comments/${commentId}`);
+export const deleteComment = (commentId, authorization) => {
+  return request.delete(`/comments/${commentId}`, {
+    headers: { authorization },
+  });
 };
 
 export const postUser = (

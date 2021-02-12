@@ -104,7 +104,10 @@ class Articles extends Component {
             <ArticleCard key={article.article_id} article={article} />
           ))}
         </ul>
-        <Pagination {...this.state.paginationConfig} className="pagination" />
+
+        {this.props.authorization ? (
+          <Pagination {...this.state.paginationConfig} className="pagination" />
+        ) : null}
       </div>
     );
   }

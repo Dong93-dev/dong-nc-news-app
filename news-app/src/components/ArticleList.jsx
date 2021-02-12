@@ -10,10 +10,17 @@ class ArticleList extends Component {
   render() {
     return (
       <div className="articleslistpage">
-        <TopicsPanel />
+        <TopicsPanel
+          authorization={this.props.authorization}
+          username={this.props.username}
+        />
         <TopicList path={this.props.path} changeTopic={this.changeTopic} />
         <Router>
-          <Articles path="/:topic" />
+          <Articles
+            path="/:topic"
+            authorization={this.props.authorization}
+            username={this.props.username}
+          />
         </Router>
       </div>
     );

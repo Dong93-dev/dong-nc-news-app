@@ -63,7 +63,11 @@ class CommentCard extends Component {
       };
     });
 
-    patchCommentById(this.state.comment.comment_id, vote).catch((err) => {
+    patchCommentById(
+      this.state.comment.comment_id,
+      vote,
+      this.props.authorization
+    ).catch((err) => {
       this.setState((currentState) => {
         return {
           comment: {

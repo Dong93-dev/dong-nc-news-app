@@ -35,9 +35,10 @@ class TopicList extends Component {
             </div>
           </Link>
         </ul>
-        <Link to="/topics/articles/*">
-          <p className="topicpage__straightin">All articles >></p>
-        </Link>
+        <p className="topicpage__straightin">
+          {" "}
+          <Link to="/topics/articles/*">All articles >></Link>
+        </p>
       </div>
     ) : (
       <nav className="topiclist">

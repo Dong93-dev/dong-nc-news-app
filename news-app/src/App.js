@@ -48,7 +48,11 @@ class App extends Component {
             username={this.state.username}
           />
 
-          <ArticleList path="/topics/articles/*" />
+          <ArticleList
+            path="/topics/articles/*"
+            authorization={this.state.authorization}
+            username={this.state.username}
+          />
           <ArticlePage
             path="/article/:articleId"
             authorization={this.state.authorization}

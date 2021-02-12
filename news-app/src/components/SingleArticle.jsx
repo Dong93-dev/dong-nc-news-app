@@ -56,7 +56,11 @@ class SingleArticle extends Component {
       };
     });
 
-    patchArticleVotebyId(this.props.articleId, vote).catch((err) =>
+    patchArticleVotebyId(
+      this.props.articleId,
+      vote,
+      this.props.authorization
+    ).catch((err) =>
       this.setState((currentState) => {
         return {
           article: {

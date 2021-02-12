@@ -9,7 +9,10 @@ import TopicsPanel from "./TopicsPanel";
 function ArticlePage(props) {
   return (
     <div className="articlePage">
-      <TopicsPanel />
+      <TopicsPanel
+        authorization={props.authorization}
+        username={props.username}
+      />
       <SingleArticle
         articleId={props.articleId}
         username={props.username}

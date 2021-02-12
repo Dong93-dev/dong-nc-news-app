@@ -21,7 +21,7 @@ class NewCommentForm extends Component {
     const comment = { body: this.state.body, username: this.props.username };
 
     this.setState({ body: "", isLoading: true }, () => {
-      postComment(this.props.articleId, comment)
+      postComment(this.props.articleId, comment, this.props.authorization)
         .then(({ comment }) => {
           this.props.postNewComment(comment);
         })
