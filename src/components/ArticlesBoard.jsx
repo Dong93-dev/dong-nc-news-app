@@ -14,7 +14,12 @@ class ArticlesBoard extends Component {
           authorization={this.props.authorization}
           username={this.props.username}
         />
-        <TopicList path={this.props.path} changeTopic={this.changeTopic} />
+        <TopicList
+          path={this.props.path}
+          changeTopic={this.changeTopic}
+          authorization={this.props.authorization}
+          username={this.props.username}
+        />
         <Router>
           <ArticlesList
             path="/:topic"

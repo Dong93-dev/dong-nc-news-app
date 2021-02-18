@@ -87,6 +87,13 @@ export const postUser = (
     .then(({ data }) => data);
 };
 
+export const fetchUser = (username, authorization) => {
+  console.log({ headers: { authorization } });
+  return request
+    .get(`/users/${username}`, { headers: { authorization } })
+    .then(({ data }) => data);
+};
+
 export const login = (username, password) => {
   return request
     .post(`/login`, { username, password })

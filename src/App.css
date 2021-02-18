@@ -18,14 +18,15 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 5px 20px 20px;
+  padding: 0px 0px 0px 20px;
+  height: 100px;
 }
 
 /* title */
 .title__head1 {
   font-size: 2rem;
   color: white;
-
+  margin-bottom: 0;
   font-family: Montserrat;
   text-decoration: none;
 }
@@ -43,17 +44,23 @@
 /* registerpanel */
 .RegisterAndLoginPanel {
   display: flex;
-  width: 140px;
+  width: 200px;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 100%;
+  transform: skewx(-20deg);
+  border-left: 2px solid white;
+  margin-right: -8px;
 }
 
 .RegisterAndLoginPanel__loginlink,
 .RegisterAndLoginPanel__registerlink {
-  color: rgb(227, 191, 183);
+  color: white;
   text-decoration: underline;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 0;
 }
@@ -61,24 +68,26 @@
 
 .welcomeandsignout {
   display: flex;
-  width: 50%;
-  max-width: 200px;
+  width: 200px;
+  border-left: 2px solid white;
   flex-direction: column;
-  padding-right: 5px;
+  padding-right: 10px;
   align-items: flex-end;
   justify-content: center;
+  height: 100%;
 }
 
 .welcomeandsignout__greeting {
-  font-size: 1rem;
-  color: rgb(126, 11, 11);
-  font-weight: 600;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 400;
   margin-bottom: 0;
   text-align: right;
+  max-height: 56px;
 }
 .welcomeandsignout__signout {
-  color: rgb(227, 191, 183);
-  font-size: 1rem;
+  color: white;
+  font-size: 1.2rem;
   font-weight: 600;
   text-decoration: underline;
   margin-bottom: 0;
@@ -193,7 +202,7 @@ span.Collapsible__trigger.is-open:hover {
 /* topicpage */
 .topicpage__prefertopic {
   width: 100%;
-  margin: 100px auto 50px auto;
+  margin: 50px auto 50px auto;
   color: #2b488c;
 
   font-size: 2rem;
@@ -686,7 +695,9 @@ span.Collapsible__trigger.is-open:hover {
 /* new topic form */
 
 .newtopicformblock {
-  width: 100%;
+  width: 70%;
+  max-width: 450px;
+  margin: 50px auto;
 }
 
 .newtopicformblock__title {
